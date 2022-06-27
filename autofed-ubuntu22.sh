@@ -1,7 +1,7 @@
 #!/bin/sh
 
-RootPass=""
-PixelfedDBpass=""
+RootPass="secretrootpasswordhere"
+PixelfedDBpass="secretpasswordhere"
 
 main() {
 
@@ -13,13 +13,15 @@ main() {
     apt_update || return 1
     install_redis || return 1
     install_mariadb || return 1
-#     mysql_secure_installation || return 1
+    mysql_secure_installation || return 1
 #     prepare_db || return 1
     install_packages || return 1
     install_PHP_packages || return 1
     configure_PHP_inis || return 1
     configure_FPM_inis || return 1
     install_composer || return 1
+    adduser_pixelfed || return 1
+    gitclone || return 1
     
 }
 
@@ -119,6 +121,29 @@ install_composer() {
     curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
     php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
 }
+
+adduser_pixelfed() {
+    fancyecho "-----------------------------------------"
+    fancyecho "adduser_pixelfed"
+    adduser --disabled-password --gecos "" pixelfed
+}
+
+gitclone() {
+    fancyecho "-----------------------------------------"
+    fancyecho "gitclone"
+    runuser -u pixelfed -- cd ~ && git clone -b dev https://github.com/pixelfed/pixelfed.git pixelfed
+    runuser -u pixelfed -- cd ~ && cd pixelfed && composer install --no-ansi --no-interaction --optimize-autoloader
+}
+
+# example_thing() {
+#     fancyecho "-----------------------------------------"
+#     fancyecho "example_thing"
+# }
+
+# example_thing() {
+#     fancyecho "-----------------------------------------"
+#     fancyecho "example_thing"
+# }
 
 ## main always at the bottom
 main "$@" || exit 1
