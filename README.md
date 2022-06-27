@@ -1,0 +1,2 @@
+# autofed
+pixelfed automation
