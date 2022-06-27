@@ -10,6 +10,7 @@ main() {
     fi
 
     echo "Running Autofed for Ubuntu 22.04"
+    apt_update || return 1
     install_redis || return 1
     install_mariadb || return 1
     #mysql_secure_installation || return 1
@@ -20,8 +21,9 @@ err() {
     exit 1
 }
 
-main "$@" || exit 1
-
+apt_update() {
+    apt update
+}
 
 install_redis() {
     apt -y install redis-server
@@ -38,5 +40,5 @@ mysql_secure_installation() {
 }
 
 
-
-
+## main always at the bottom
+main "$@" || exit 1
