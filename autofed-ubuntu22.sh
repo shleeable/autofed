@@ -35,9 +35,9 @@ install_mariadb() {
     systemctl enable --now mariadb
 }
 
-mysql_secure_installation() {
-    ## mysql_secure_installation
-}
+# mysql_secure_installation() {
+#     ## mysql_secure_installation
+# }
 
 
 ## main always at the bottom
