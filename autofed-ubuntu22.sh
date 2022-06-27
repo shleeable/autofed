@@ -3,3 +3,4 @@
 RootPass=""
 PixelfedDBpass=""
 
+echo "demo"
