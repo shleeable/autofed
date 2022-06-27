@@ -13,7 +13,7 @@ main() {
     apt_update || return 1
     install_redis || return 1
     install_mariadb || return 1
-    #mysql_secure_installation || return 1
+    mysql_secure_installation || return 1
 }
 
 err() {
@@ -35,9 +35,9 @@ install_mariadb() {
     systemctl enable --now mariadb
 }
 
-# mysql_secure_installation() {
-#     ## mysql_secure_installation
-# }
+mysql_secure_installation() {
+    echo "TODO"
+}
 
 
 ## main always at the bottom
