@@ -22,7 +22,6 @@ main() {
     install_composer || return 1
     adduser_pixelfed || return 1
     gitclone || return 1
-    
 }
 
 ### Autofed functions
