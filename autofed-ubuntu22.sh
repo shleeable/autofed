@@ -5,6 +5,7 @@ PixelfedDBpass=""
 
 main() {
 
+    need_cmd bingobango
     if [ ! -t 1 ]; then
         err "Autofed has to run interactively"
     fi
@@ -15,18 +16,25 @@ main() {
     install_mariadb || return 1
 #     mysql_secure_installation || return 1
 #     prepare_db || return 1
-#     install_packages || return 1
-#     install_PHP_packages || return 1
-#     configure_PHP_inis || return 1
-#     configure_FPM_inis || return 1
-#     install_composer || return 1
+    install_packages || return 1
+    install_PHP_packages || return 1
+    configure_PHP_inis || return 1
+    configure_FPM_inis || return 1
+    install_composer || return 1
     
 }
 
+### Autofed functions
+## functions by readset.io
+
 err() {
-    >&2 echo "$1"
+    >&2 echo "\e[1;31m${1}\e[1;m"
     exit 1
 }
+
+
+### Autofed Steps
+## steps by Shlee
 
 apt_update() {
     echo "apt_update"
