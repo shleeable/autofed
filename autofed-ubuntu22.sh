@@ -131,8 +131,8 @@ adduser_pixelfed() {
 gitclone() {
     fancyecho "-----------------------------------------"
     fancyecho "gitclone"
-    runuser -u pixelfed -- cd ~ && git clone -b dev https://github.com/pixelfed/pixelfed.git pixelfed
-    runuser -u pixelfed -- cd ~ && cd pixelfed && composer install --no-ansi --no-interaction --optimize-autoloader
+    runuser - pixelfed -c "git clone -b dev https://github.com/pixelfed/pixelfed.git pixelfed"
+    runuser - pixelfed -c "cd pixelfed && composer install --no-ansi --no-interaction --optimize-autoloader"
 }
 
 # example_thing() {
