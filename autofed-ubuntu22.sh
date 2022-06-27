@@ -108,7 +108,7 @@ configure_FPM_inis() {
     fancyecho "-----------------------------------------"
     fancyecho "configure_FPM_inis"
     cp /etc/php/8.1/fpm/pool.d/www.conf /etc/php/8.1/fpm/pool.d/pixelfed.conf
-#     sed -i "s/"\[www\]"/"\[pixelfed\]"/g" /etc/php/8.1/fpm/pool.d/pixelfed.conf
+#     sed -i "s/"[www]"/"[pixelfed]"/g" /etc/php/8.1/fpm/pool.d/pixelfed.conf
 #     sed -i "s/user = .*/user = pixelfed/g" /etc/php/8.1/fpm/pool.d/pixelfed.conf
 #     sed -i "s/group = .*/group = pixelfed/g" /etc/php/8.1/fpm/pool.d/pixelfed.conf
 #     sed -i "s/listen = .*/listen = \/run\/php\/php8.1-fpm-pixelfed.sock/g" /etc/php/8.1/fpm/pool.d/pixelfed.conf
