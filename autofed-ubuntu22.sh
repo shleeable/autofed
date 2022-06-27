@@ -13,13 +13,13 @@ main() {
     apt_update || return 1
     install_redis || return 1
     install_mariadb || return 1
-    mysql_secure_installation || return 1
-    prepare_db || return 1
-    install_packages || return 1
-    install_PHP_packages || return 1
-    configure_PHP_inis || return 1
-    configure_FPM_inis || return 1
-    install_composer || return 1
+#     mysql_secure_installation || return 1
+#     prepare_db || return 1
+#     install_packages || return 1
+#     install_PHP_packages || return 1
+#     configure_PHP_inis || return 1
+#     configure_FPM_inis || return 1
+#     install_composer || return 1
     
 }
 
@@ -49,9 +49,9 @@ mysql_secure_installation() {
 prepare_db() {
     mysql -u root <<EOS
     create database pixelfed;
-    grant all privileges on pixelfed.* to 'pixelfed'@'localhost' identified by 'secretpasswordhere';
+    grant all privileges on pixelfed.* to 'pixelfed'@'localhost' identified by "${PixelfedDBpass}";
     flush privileges;
-EOS
+    EOS
 }
 
 install_packages() {
