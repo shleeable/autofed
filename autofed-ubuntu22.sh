@@ -1,7 +1,7 @@
 #!/bin/sh
 
-RootPass="secretrootpasswordhere"
-PixelfedDBpass="secretpasswordhere"
+DBRootPass="secretrootpasswordhere"
+DBPixelfedPass="secretpasswordhere"
 
 main() {
 
@@ -14,7 +14,7 @@ main() {
     install_redis || return 1
     install_mariadb || return 1
     mysql_secure_installation || return 1
-#     prepare_db || return 1
+    prepare_db || return 1
     install_packages || return 1
     install_PHP_packages || return 1
     configure_PHP_inis || return 1
@@ -62,7 +62,19 @@ install_mariadb() {
 mysql_secure_installation() {
     fancyecho "-----------------------------------------"
     fancyecho "mysql_secure_installation"
-    echo "TODO"
+
+mysql_secure_installation 2>/dev/null <<MSI
+
+n
+y
+${DBRootPass}
+${DBRootPass}
+y
+y
+y
+y
+
+MSI
 }
 
 prepare_db() {
@@ -70,7 +82,7 @@ prepare_db() {
     fancyecho "prepare_db"
     mysql -u root <<EOS
     create database pixelfed;
-    grant all privileges on pixelfed.* to 'pixelfed'@'localhost' identified by "${PixelfedDBpass}";
+    grant all privileges on pixelfed.* to 'pixelfed'@'localhost' identified by "${DBPixelfedPass}";
     flush privileges;
 EOS
 }
