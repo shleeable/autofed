@@ -5,7 +5,6 @@ PixelfedDBpass=""
 
 main() {
 
-    need_cmd bingobango
     if [ ! -t 1 ]; then
         errdie "Autofed has to run interactively"
     fi
@@ -32,8 +31,7 @@ errdie() {
 }
 
 fancyecho() {
-    >&2 echo "\e[1;31m${1}\e[1;m"
-    exit 1
+    >&2 echo "\e[1;32m${1}\e[1;m"
 }
 
 ### Autofed Steps
