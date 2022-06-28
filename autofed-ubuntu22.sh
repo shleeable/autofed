@@ -55,14 +55,14 @@ crudini
 install_redis() {
     fancyecho "-----------------------------------------"
     fancyecho "install_redis"
-    apt -qq -y install redis-server
+    apt -qqy install redis-server
     systemctl enable --now redis-server
 }
 
 install_mariadb() {
     fancyecho "-----------------------------------------"
     fancyecho "install_mariadb"
-    apt -qq -y install mariadb-server
+    apt -qqy install mariadb-server
     systemctl enable --now mariadb
 }
 
@@ -103,9 +103,9 @@ install_packages() {
 install_PHP_packages() {
     fancyecho "-----------------------------------------"
     fancyecho "install_PHP_packages"
-    apt  -qq -y install php8.1-fpm php8.1-cli
+    apt  -qqy install php8.1-fpm php8.1-cli
     systemctl enable --now php8.1-fpm
-    apt  -qq -y install php8.1-bcmath php8.1-curl php8.1-gd php8.1-intl php8.1-mbstring php8.1-xml php8.1-zip php8.1-mysql php-redis
+    apt  -qqy install php8.1-bcmath php8.1-curl php8.1-gd php8.1-intl php8.1-mbstring php8.1-xml php8.1-zip php8.1-mysql php-redis
 }
 
 configure_PHP_inis() {
@@ -158,7 +158,7 @@ gitclone() {
 example_thing() {
     fancyecho "-----------------------------------------"
     fancyecho "example_thing"
-    php artisan install
+
 }
 
 # example_thing() {
