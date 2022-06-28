@@ -26,6 +26,7 @@ main() {
     install_composer || return 1
     adduser_pixelfed || return 1
     gitclone || return 1
+    example_thing || return 1
 }
 
 ### Autofed functions
@@ -102,6 +103,7 @@ install_PHP_packages() {
     fancyecho "-----------------------------------------"
     fancyecho "install_PHP_packages"
     apt -y install php8.1-fpm php8.1-cli
+    systemctl enable --now php8.1-fpm
     apt -y install php8.1-bcmath php8.1-curl php8.1-gd php8.1-intl php8.1-mbstring php8.1-xml php8.1-zip php8.1-mysql php-redis
 }
 
@@ -152,10 +154,11 @@ gitclone() {
     runuser - pixelfed -c "cd pixelfed && composer install --no-ansi --no-interaction --optimize-autoloader"
 }
 
-# example_thing() {
-#     fancyecho "-----------------------------------------"
-#     fancyecho "example_thing"
-# }
+example_thing() {
+    fancyecho "-----------------------------------------"
+    fancyecho "example_thing"
+    php artisan install
+}
 
 # example_thing() {
 #     fancyecho "-----------------------------------------"
