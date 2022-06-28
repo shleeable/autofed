@@ -1,5 +1,8 @@
 #!/bin/sh
 
+## TODO
+# Investigate crudini
+
 DBRootPass="secretrootpasswordhere"
 DBPixelfedPass="secretpasswordhere"
 
@@ -43,6 +46,8 @@ apt_update() {
     fancyecho "apt_update"
     apt update
 }
+
+crudini
 
 install_redis() {
     fancyecho "-----------------------------------------"
