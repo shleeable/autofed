@@ -102,17 +102,17 @@ install_PHP_packages() {
 configure_PHP_inis() {
     fancyecho "-----------------------------------------"
     fancyecho "configure_PHP_inis"
-    sed -i "s/post_max_size = .*/post_max_size = 300M/" /etc/php/8.1/cli/php.ini
-    sed -i "s/file_uploads = .*/file_uploads = On/" /etc/php/8.1/cli/php.ini
-    sed -i "s/upload_max_filesize = .*/upload_max_filesize = 300M/" /etc/php/8.1/cli/php.ini
-    sed -i "s/max_file_uploads = .*/max_file_uploads = 20/" /etc/php/8.1/cli/php.ini
-    sed -i "s/max_execution_time = .*/max_execution_time = 120/" /etc/php/8.1/cli/php.ini
+    sed -i 's/post_max_size = .*/post_max_size = 300M/' /etc/php/8.1/cli/php.ini
+    sed -i 's/file_uploads = .*/file_uploads = On/' /etc/php/8.1/cli/php.ini
+    sed -i 's/upload_max_filesize = .*/upload_max_filesize = 300M/' /etc/php/8.1/cli/php.ini
+    sed -i 's/max_file_uploads = .*/max_file_uploads = 20/' /etc/php/8.1/cli/php.ini
+    sed -i 's/max_execution_time = .*/max_execution_time = 120/' /etc/php/8.1/cli/php.ini
 
-    sed -i "s/post_max_size = .*/post_max_size = 300M/" /etc/php/8.1/fpm/php.ini
-    sed -i "s/file_uploads = .*/file_uploads = On/" /etc/php/8.1/fpm/php.ini
-    sed -i "s/upload_max_filesize = .*/upload_max_filesize = 300M/" /etc/php/8.1/fpm/php.ini
-    sed -i "s/max_file_uploads = .*/max_file_uploads = 20/" /etc/php/8.1/fpm/php.ini
-    sed -i "s/max_execution_time = .*/max_execution_time = 120/" /etc/php/8.1/fpm/php.ini
+    sed -i 's/post_max_size = .*/post_max_size = 300M/' /etc/php/8.1/fpm/php.ini
+    sed -i 's/file_uploads = .*/file_uploads = On/' /etc/php/8.1/fpm/php.ini
+    sed -i 's/upload_max_filesize = .*/upload_max_filesize = 300M/' /etc/php/8.1/fpm/php.ini
+    sed -i 's/max_file_uploads = .*/max_file_uploads = 20/' /etc/php/8.1/fpm/php.ini
+    sed -i 's/max_execution_time = .*/max_execution_time = 120/' /etc/php/8.1/fpm/php.ini
 }
 
 configure_FPM_inis() {
