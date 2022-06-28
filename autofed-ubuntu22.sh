@@ -62,18 +62,18 @@ mysql_secure_installation() {
     fancyecho "-----------------------------------------"
     fancyecho "mysql_secure_installation"
 
-mysql_secure_installation 2>/dev/null <<MSI
+# mysql_secure_installation 2>/dev/null <<MSI
 
-n
-y
-${DBRootPass}
-${DBRootPass}
-y
-y
-y
-y
+# n
+# y
+# ${DBRootPass}
+# ${DBRootPass}
+# y
+# y
+# y
+# y
 
-MSI
+# MSI
 }
 
 prepare_db() {
