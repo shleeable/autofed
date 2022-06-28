@@ -1,6 +1,7 @@
 #!/bin/sh
 
 ## TODO
+# FIX mysql_secure_installation
 # Investigate crudini
 
 DBRootPass="secretrootpasswordhere"
