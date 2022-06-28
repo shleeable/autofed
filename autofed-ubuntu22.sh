@@ -27,12 +27,12 @@ main() {
 ### Autofed functions
 
 errdie() {
-    >&2 echo "\e[1;31m${1}\e[1;m"
+    >&2 echo -e "\e[1;31m${1}\e[1;m"
     exit 1
 }
 
 fancyecho() {
-    >&2 echo "\e[1;32m${1}\e[1;m"
+    >&2 echo -e "\e[1;32m ff \e[1;m"
 }
 
 ### Autofed Steps
