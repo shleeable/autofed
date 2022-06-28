@@ -25,7 +25,7 @@ main() {
     configure_PHP_inis || return 1
     configure_FPM_inis || return 1
     install_composer || return 1
-    gitclone || return 1
+    git_clone || return 1
     artisan_install || return 1
     artisan_horizon || return 1
     set_pathpermissions || return 1
@@ -151,9 +151,9 @@ adduser_pixelfed() {
     adduser --disabled-password --gecos "" pixelfed
 }
 
-gitclone() {
+git_clone() {
     fancyecho "-----------------------------------------"
-    fancyecho "gitclone"
+    fancyecho "git_clone"
     runuser - pixelfed -c "git clone -b dev https://github.com/pixelfed/pixelfed.git pixelfed"
     runuser - pixelfed -c "cd pixelfed && composer install --no-ansi --no-interaction --optimize-autoloader"
 }
@@ -166,20 +166,20 @@ artisan_install() {
 
 artisan_horizon() {
     fancyecho "-----------------------------------------"
-    fancyecho "example_thing"
+    fancyecho "artisan_horizon"
     runuser - pixelfed -c "cd pixelfed && php artisan horizon:install"
     runuser - pixelfed -c "cd pixelfed && php artisan horizon:publish"
 }
 
 set_pathpermissions() {
     fancyecho "-----------------------------------------"
-    fancyecho "example_thing"
+    fancyecho "set_pathpermissions"
     chown -R pixelfed:www-data /home/pixelfed
 }
 
 install_nginx() {
     fancyecho "-----------------------------------------"
-    fancyecho "example_thing"
+    fancyecho "install_nginx"
     apt -y install nginx certbot python3-certbot-nginx
     systemctl enable --now nginx
 }
