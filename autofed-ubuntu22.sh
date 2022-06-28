@@ -25,9 +25,12 @@ main() {
     configure_PHP_inis || return 1
     configure_FPM_inis || return 1
     install_composer || return 1
-
     gitclone || return 1
-    example_thing || return 1
+    artisan_install || return 1
+    artisan_horizon || return 1
+    set_pathpermissions || return 1
+    install_nginx || return 1
+    
 }
 
 ### Autofed functions
@@ -155,11 +158,41 @@ gitclone() {
     runuser - pixelfed -c "cd pixelfed && composer install --no-ansi --no-interaction --optimize-autoloader"
 }
 
-example_thing() {
+artisan_install() {
+    fancyecho "-----------------------------------------"
+    fancyecho "artisan_install"
+    runuser - pixelfed -c "cd pixelfed && php artisan install"
+}
+
+artisan_horizon() {
     fancyecho "-----------------------------------------"
     fancyecho "example_thing"
-
+    runuser - pixelfed -c "cd pixelfed && php artisan horizon:install"
+    runuser - pixelfed -c "cd pixelfed && php artisan horizon:publish"
 }
+
+set_pathpermissions() {
+    fancyecho "-----------------------------------------"
+    fancyecho "example_thing"
+    chown -R pixelfed:www-data /home/pixelfed
+}
+
+install_nginx() {
+    fancyecho "-----------------------------------------"
+    fancyecho "example_thing"
+    apt -y install nginx certbot python3-certbot-nginx
+    systemctl enable --now nginx
+}
+
+# example_thing() {
+#     fancyecho "-----------------------------------------"
+#     fancyecho "example_thing"
+# }
+
+# example_thing() {
+#     fancyecho "-----------------------------------------"
+#     fancyecho "example_thing"
+# }
 
 # example_thing() {
 #     fancyecho "-----------------------------------------"
