@@ -200,11 +200,13 @@ install_nginx() {
     systemctl enable --now nginx
 }
 
-# example_thing() {
-#     fancyecho "-----------------------------------------"
-#     fancyecho "example_thing"
-# }
+# BROKEN
+nginx_certbot() {
+    fancyecho "-----------------------------------------"
+    fancyecho "nginx_certbot"
+}
 
+# Tested
 systemd_pixelfedhorizon() {
     fancyecho "-----------------------------------------"
     fancyecho "systemd_pixelfedhorizon"
