@@ -19,7 +19,7 @@ main() {
     adduser_pixelfed || return 1 
     install_redis || return 1
     install_mariadb || return 1
-    mysql_secure_installation || return 1
+    mysql_secure || return 1
     prepare_db || return 1
     install_packages || return 1
     install_PHP_packages || return 1
@@ -81,10 +81,10 @@ install_mariadb() {
 }
 
 # BROKEN
-mysql_secure_installation() {
+mysql_secure() {
     fancyecho "-----------------------------------------"
     fancyecho "mysql_secure_installation"
-    mysql_secure_installation
+    /usr/bin/mysql_secure_installation
 }
 
 # Tested
