@@ -182,14 +182,13 @@ nginx_certbot() {
     certbot -d ${PFDomain}
     cp /home/pixelfed/pixelfed/contrib/nginx.conf /etc/nginx/sites-available/pixelfed.conf
 
-    sed -i 's/^server_name .*/server_name ${PFDomain};/' /etc/nginx/sites-available/pixelfed.conf
-    sed -i 's/^root .*/root \/home\/pixelfed\/pixelfed\/public\;/' /etc/nginx/sites-available/pixelfed.conf    
+    sed -i "s/server_name .*/server_name ${PFDomain};/" /etc/nginx/sites-available/pixelfed.conf  # Changes both references
+    sed -i 's/root .*/root \/home\/pixelfed\/pixelfed\/public\/\;/' /etc/nginx/sites-available/pixelfed.conf
 
-    sed -i 's/^ssl_certificate .*/ssl_certificate ${PFDomain};/' /etc/nginx/sites-available/pixelfed.conf
-    sed -i 's/^ssl_certificate_key .*/ssl_certificate_key ${PFDomain};/' /etc/nginx/sites-available/pixelfed.conf
+    sed -i "s/ssl_certificate .*/ssl_certificate \/etc\/letsencrypt\/live\/${PFDomain}\/fullchain.pem\;/" /etc/nginx/sites-available/pixelfed.conf
+    sed -i "s/ssl_certificate_key .*/ssl_certificate_key \/etc\/letsencrypt\/live\/${PFDomain}\/privkey.pem;/" /etc/nginx/sites-available/pixelfed.conf
 
-    sed -i 's/^fastcgi_pass .*/fastcgi_pass unix:\/run\/php\/php8.1-fpm-pixelfed.sock;/' /etc/nginx/sites-available/pixelfed.conf
-
+    sed -i 's/fastcgi_pass .*/fastcgi_pass unix:\/run\/php\/php8.1-fpm-pixelfed.sock;/' /etc/nginx/sites-available/pixelfed.conf
 
     ln -s /etc/nginx/sites-available/pixelfed.conf /etc/nginx/sites-enabled/
     systemctl reload nginx
