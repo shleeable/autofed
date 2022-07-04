@@ -31,6 +31,7 @@ main() {
     artisan_horizon || return 1  # 
     set_pathpermissions || return 1  # 
     install_nginx || return 1
+    nginx_certbot || return 1
     systemd_pixelfedhorizon || return 1
     cron_artisan_schedule || return 1
     
