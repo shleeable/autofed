@@ -4,8 +4,9 @@
 # FIX mysql_secure_installation
 # Investigate crudini
 
-DBRootPass="secretrootpasswordhere"
-DBPixelfedPass="secretpasswordhere"
+PFDomain='pixelfed.au'
+DBRootPass='secretrootpasswordhere'
+DBPixelfedPass='secretpasswordhere'
 
 main() {
 
@@ -83,19 +84,7 @@ install_mariadb() {
 mysql_secure_installation() {
     fancyecho "-----------------------------------------"
     fancyecho "mysql_secure_installation"
-
-# mysql_secure_installation 2>/dev/null <<MSI
-
-# n
-# y
-# ${DBRootPass}
-# ${DBRootPass}
-# y
-# y
-# y
-# y
-
-# MSI
+    mysql_secure_installation
 }
 
 # Tested
@@ -204,6 +193,22 @@ install_nginx() {
 nginx_certbot() {
     fancyecho "-----------------------------------------"
     fancyecho "nginx_certbot"
+    rm /etc/nginx/sites-enabled/default
+    certbot -d ${PFDomain}
+    cp /home/pixelfed/pixelfed/contrib/nginx.conf /etc/nginx/sites-available/pixelfed.conf
+
+    sed -i 's/^server_name .*/server_name ${PFDomain};/' /etc/nginx/sites-available/pixelfed.conf
+    sed -i 's/^root .*/root \/home\/pixelfed\/pixelfed\/public\;/' /etc/nginx/sites-available/pixelfed.conf    
+
+    sed -i 's/^ssl_certificate .*/ssl_certificate ${PFDomain};/' /etc/nginx/sites-available/pixelfed.conf
+    sed -i 's/^ssl_certificate_key .*/ssl_certificate_key ${PFDomain};/' /etc/nginx/sites-available/pixelfed.conf
+
+    sed -i 's/^fastcgi_pass .*/fastcgi_pass unix:\/run\/php\/php8.1-fpm-pixelfed.sock;/' /etc/nginx/sites-available/pixelfed.conf
+
+    ssl_certificate /etc/letsencrypt/live/pixelfed.au/fullchain.pem;       # generate your own
+    ssl_certificate_key /etc/letsencrypt/live/pixelfed.au/privkey.pem;   # or use letsencrypt
+
+    fastcgi_pass 
 }
 
 # Tested
