@@ -33,7 +33,7 @@ main() {
     install_nginx || return 1
     nginx_certbot || return 1
     systemd_pixelfedhorizon || return 1
-    cron_artisan_schedule || return 1
+    cron_artisan_schedule || return 1  # Tested
     
 }
 
@@ -190,7 +190,7 @@ nginx_certbot() {
     sed -i 's/fastcgi_pass .*/fastcgi_pass unix:\/run\/php\/php8.1-fpm-pixelfed.sock;/' /etc/nginx/sites-available/pixelfed.conf
 
     ln -s /etc/nginx/sites-available/pixelfed.conf /etc/nginx/sites-enabled/
-    systemctl reload nginx
+    systemctl reload nginx && fancyecho "nginx reloaded"
 }
 
 systemd_pixelfedhorizon() {
