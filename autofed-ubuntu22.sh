@@ -181,7 +181,7 @@ nginx_certbot() {
     fancyecho "-----------------------------------------"
     fancyecho "nginx_certbot"
     rm /etc/nginx/sites-enabled/default
-    certbot certonly -m ${PFDomainEmail} -d ${PFDomain}
+    certbot certonly --agree-tos -m ${PFDomainEmail} -d ${PFDomain}
     cp /home/pixelfed/pixelfed/contrib/nginx.conf /etc/nginx/sites-available/pixelfed.conf
 
     sed -i "s/server_name .*/server_name ${PFDomain};/" /etc/nginx/sites-available/pixelfed.conf  # Changes both references
