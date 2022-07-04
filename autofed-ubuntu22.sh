@@ -15,21 +15,21 @@ main() {
     fi
 
     echo "Running Autofed for Ubuntu 22.04"
-    apt_update || return 1
-    adduser_pixelfed || return 1 
-    install_redis || return 1
-    install_mariadb || return 1
+    apt_update || return 1  # Tested
+    adduser_pixelfed || return 1  # Tested
+    install_redis || return 1  # Tested
+    install_mariadb || return 1  # Tested
     mysql_secure || return 1
-    prepare_db || return 1
-    install_packages || return 1
-    install_PHP_packages || return 1
-    configure_PHP_inis || return 1
-    configure_FPM_inis || return 1
-    install_composer || return 1
-    git_clone || return 1
+    prepare_db || return 1  # 
+    install_packages || return 1  # 
+    install_PHP_packages || return 1  # 
+    configure_PHP_inis || return 1  # 
+    configure_FPM_inis || return 1  # 
+    install_composer || return 1  # 
+    git_clone || return 1  # 
     artisan_install || return 1
-    artisan_horizon || return 1
-    set_pathpermissions || return 1
+    artisan_horizon || return 1  # 
+    set_pathpermissions || return 1  # 
     install_nginx || return 1
     systemd_pixelfedhorizon || return 1
     cron_artisan_schedule || return 1
@@ -50,21 +50,18 @@ fancyecho() {
 ### Autofed Steps
 ## steps by Shlee
 
-# Tested
 apt_update() {
     fancyecho "-----------------------------------------"
     fancyecho "apt_update"
     apt update
 }
 
-# Tested
 adduser_pixelfed() {
     fancyecho "-----------------------------------------"
     fancyecho "adduser_pixelfed"
     adduser --disabled-password --gecos "" pixelfed  || errdie "User already exists.";
 }
 
-# Tested
 install_redis() {
     fancyecho "-----------------------------------------"
     fancyecho "install_redis"
@@ -72,7 +69,6 @@ install_redis() {
     systemctl enable --now redis-server
 }
 
-# Tested
 install_mariadb() {
     fancyecho "-----------------------------------------"
     fancyecho "install_mariadb"
@@ -87,7 +83,6 @@ mysql_secure() {
     /usr/bin/mysql_secure_installation
 }
 
-# Tested
 prepare_db() {
     fancyecho "-----------------------------------------"
     fancyecho "prepare_db"
@@ -98,14 +93,12 @@ prepare_db() {
 EOS
 }
 
-# Tested
 install_packages() {
     fancyecho "-----------------------------------------"
     fancyecho "install_packages"
     apt -y install ffmpeg unzip zip jpegoptim optipng pngquant gifsicle
 }
 
-# Tested
 install_PHP_packages() {
     fancyecho "-----------------------------------------"
     fancyecho "install_PHP_packages"
@@ -114,7 +107,6 @@ install_PHP_packages() {
     apt  -y install php8.1-bcmath php8.1-curl php8.1-gd php8.1-intl php8.1-mbstring php8.1-xml php8.1-zip php8.1-mysql php-redis
 }
 
-# Tested
 configure_PHP_inis() {
     fancyecho "-----------------------------------------"
     fancyecho "configure_PHP_inis"
@@ -131,7 +123,6 @@ configure_PHP_inis() {
     sed -i 's/^max_execution_time = .*/max_execution_time = 120/' /etc/php/8.1/fpm/php.ini
 }
 
-# Tested
 configure_FPM_inis() {
     fancyecho "-----------------------------------------"
     fancyecho "configure_FPM_inis"
@@ -143,7 +134,6 @@ configure_FPM_inis() {
     systemctl restart php8.1-fpm
 }
 
-# Tested
 install_composer() {
     fancyecho "-----------------------------------------"
     fancyecho "install_composer"
@@ -151,7 +141,6 @@ install_composer() {
     php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
 }
 
-# Tested
 git_clone() {
     fancyecho "-----------------------------------------"
     fancyecho "git_clone"
@@ -159,14 +148,12 @@ git_clone() {
     runuser - pixelfed -c "cd pixelfed && composer install --no-ansi --no-interaction --optimize-autoloader"
 }
 
-# Tested
 artisan_install() {
     fancyecho "-----------------------------------------"
     fancyecho "artisan_install"
     runuser - pixelfed -c "cd pixelfed && php artisan install"
 }
 
-# Tested
 artisan_horizon() {
     fancyecho "-----------------------------------------"
     fancyecho "artisan_horizon"
@@ -174,14 +161,12 @@ artisan_horizon() {
     runuser - pixelfed -c "cd pixelfed && php artisan horizon:publish"
 }
 
-# Tested
 set_pathpermissions() {
     fancyecho "-----------------------------------------"
     fancyecho "set_pathpermissions"
     chown -R pixelfed:www-data /home/pixelfed
 }
 
-# Tested
 install_nginx() {
     fancyecho "-----------------------------------------"
     fancyecho "install_nginx"
@@ -211,7 +196,6 @@ nginx_certbot() {
     
 }
 
-# Tested
 systemd_pixelfedhorizon() {
     fancyecho "-----------------------------------------"
     fancyecho "systemd_pixelfedhorizon"
@@ -245,7 +229,6 @@ EOF
     systemctl enable --now pixelfedhorizon
 }
 
-# Tested
 cron_artisan_schedule() {
     fancyecho "-----------------------------------------"
     fancyecho "cron_artisan_schedule"
