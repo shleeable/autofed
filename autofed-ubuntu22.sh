@@ -5,6 +5,7 @@
 # Investigate crudini
 
 PFDomain='pixelfed.au'
+PFDomainEmail='pixelfed@pixelfed.au'
 DBRootPass='secretrootpasswordhere'
 DBPixelfedPass='secretpasswordhere'
 
@@ -180,7 +181,7 @@ nginx_certbot() {
     fancyecho "-----------------------------------------"
     fancyecho "nginx_certbot"
     rm /etc/nginx/sites-enabled/default
-    certbot -d ${PFDomain}
+    certbot certonly -m ${PFDomainEmail} -d ${PFDomain}
     cp /home/pixelfed/pixelfed/contrib/nginx.conf /etc/nginx/sites-available/pixelfed.conf
 
     sed -i "s/server_name .*/server_name ${PFDomain};/" /etc/nginx/sites-available/pixelfed.conf  # Changes both references
