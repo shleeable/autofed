@@ -61,7 +61,7 @@ apt_update() {
 adduser_pixelfed() {
     fancyecho "-----------------------------------------"
     fancyecho "adduser_pixelfed"
-    adduser --disabled-password --gecos "" pixelfed
+    adduser --disabled-password --gecos "" pixelfed  || echo "User already exists.";
 }
 
 # Tested
