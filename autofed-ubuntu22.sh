@@ -205,10 +205,10 @@ nginx_certbot() {
 
     sed -i 's/^fastcgi_pass .*/fastcgi_pass unix:\/run\/php\/php8.1-fpm-pixelfed.sock;/' /etc/nginx/sites-available/pixelfed.conf
 
-    ssl_certificate /etc/letsencrypt/live/pixelfed.au/fullchain.pem;       # generate your own
-    ssl_certificate_key /etc/letsencrypt/live/pixelfed.au/privkey.pem;   # or use letsencrypt
 
-    fastcgi_pass 
+    ln -s /etc/nginx/sites-available/pixelfed.conf /etc/nginx/sites-enabled/
+    systemctl reload nginx
+    
 }
 
 # Tested
