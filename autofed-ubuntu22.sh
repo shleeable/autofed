@@ -20,20 +20,20 @@ main() {
     adduser_pixelfed || return 1  # Tested
     install_redis || return 1  # Tested
     install_mariadb || return 1  # Tested
-    mysql_secure || return 1
-    prepare_db || return 1  #
-    install_packages || return 1  #
-    install_PHP_packages || return 1  #
-    configure_PHP_inis || return 1  #
-    configure_FPM_inis || return 1  #
-    install_composer || return 1  #
-    git_clone || return 1  #
-    artisan_install || return 1
-    artisan_horizon || return 1  #
-    set_pathpermissions || return 1  #
-    install_nginx || return 1
-    nginx_certbot || return 1
-    systemd_pixelfedhorizon || return 1
+    mysql_secure || return 1  #  BROKEN
+    prepare_db || return 1  # Tested
+    install_packages || return 1  # Tested
+    install_PHP_packages || return 1  # Tested
+    configure_PHP_inis || return 1  # Tested
+    configure_FPM_inis || return 1  # Tested
+    install_composer || return 1  # Tested
+    git_clone || return 1  # Tested
+    artisan_install || return 1  # ??
+    artisan_horizon || return 1  # Tested
+    set_pathpermissions || return 1  # Tested
+    install_nginx || return 1  # ??
+    nginx_certbot || return 1  # ?
+    systemd_pixelfedhorizon || return 1  # ?
     cron_artisan_schedule || return 1  # Tested
 }
 
@@ -60,7 +60,7 @@ apt_update() {
 adduser_pixelfed() {
     fancyecho "-----------------------------------------"
     fancyecho "adduser_pixelfed"
-    adduser --disabled-password --gecos "" pixelfed  || errdie "User already exists.";
+    adduser --disabled-password --gecos "" pixelfed
 }
 
 install_redis() {
