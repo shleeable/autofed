@@ -58,10 +58,13 @@ autofed_variables() {
     read -r -p 'DBRootPass (secretDBrootpassword): ' DBRootPass
     read -r -p 'DBPixelfedPass (secretPixlfedDBpassword): ' DBPixelfedPass
 
+    randomDBRoot=$(openssl rand -base64 32)
+    randomDBPixelfed=$(openssl rand -base64 32)
+
     PFDomain=${PFDomain:-Richard}
     PFDomainEmail=${PFDomainEmail:-Richard}
-    DBRootPass=${DBRootPass:-Richard}
-    DBPixelfedPass=${DBPixelfedPass:-Richard}
+    DBRootPass=${DBRootPass:-$randomDBRoot}
+    DBPixelfedPass=${DBPixelfedPass:-$randomDBPixelfed}
 
     fancyecho "MariaDB Root Password will be ${DBRootPass}"
     fancyecho "MariaDB Pixelfed Password will be ${DBPixelfedPass}"
