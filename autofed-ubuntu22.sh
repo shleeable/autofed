@@ -4,11 +4,6 @@
 # FIX mysql_secure_installation
 # Investigate crudini
 
-PFDomain='pixelfed.au'
-PFDomainEmail='pixelfed@pixelfed.au'
-DBRootPass='secretrootpasswordhere'
-DBPixelfedPass='secretpasswordhere'
-
 main() {
 
     if [ ! -t 1 ]; then
@@ -16,6 +11,7 @@ main() {
     fi
 
     echo "Running Autofed for Ubuntu 22.04"
+    autofed_variables || return 1
     apt_update || return 1  # Tested
     adduser_pixelfed || return 1  # Tested
     install_redis || return 1  # Tested
@@ -50,6 +46,26 @@ fancyecho() {
 
 ### Autofed Steps
 ## steps by Shlee
+autofed_variables() {
+    fancyecho "-----------------------------------------"
+    fancyecho "apt_update"
+    fancyecho "--"
+    fancyecho "Press enter to generate random passwords"
+    read -r -p 'PFDomain (pixelfed.au): ' PFDomain
+    read -r -p 'PFDomainEmail (pixelfed@pixelfed.au): ' PFDomainEmail
+    fancyecho "--"
+    fancyecho "Press enter to generate random passwords"
+    read -r -p 'DBRootPass (secretDBrootpassword): ' DBRootPass
+    read -r -p 'DBPixelfedPass (secretPixlfedDBpassword): ' DBPixelfedPass
+
+    PFDomain=${PFDomain:-Richard}
+    PFDomainEmail=${PFDomainEmail:-Richard}
+    DBRootPass=${DBRootPass:-Richard}
+    DBPixelfedPass=${DBPixelfedPass:-Richard}
+
+    fancyecho "MariaDB Root Password will be ${DBRootPass}"
+    fancyecho "MariaDB Pixelfed Password will be ${DBPixelfedPass}"
+}
 
 apt_update() {
     fancyecho "-----------------------------------------"
