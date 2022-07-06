@@ -53,21 +53,13 @@ autofed_variables() {
     fancyecho "Press enter to generate random passwords"
     read -r -p 'PFDomain (pixelfed.au): ' PFDomain
     read -r -p 'PFDomainEmail (pixelfed@pixelfed.au): ' PFDomainEmail
-    fancyecho "--"
-    fancyecho "Press enter to generate random passwords"
     read -r -p 'DBRootPass (secretDBrootpassword): ' DBRootPass
     read -r -p 'DBPixelfedPass (secretPixlfedDBpassword): ' DBPixelfedPass
 
-    randomDBRoot=$(openssl rand -base64 32)
-    randomDBPixelfed=$(openssl rand -base64 32)
-
-    PFDomain=${PFDomain:-Richard}
-    PFDomainEmail=${PFDomainEmail:-Richard}
-    DBRootPass=${DBRootPass:-$randomDBRoot}
-    DBPixelfedPass=${DBPixelfedPass:-$randomDBPixelfed}
-
-    fancyecho "MariaDB Root Password will be ${DBRootPass}"
-    fancyecho "MariaDB Pixelfed Password will be ${DBPixelfedPass}"
+    fancyecho "Pixelfed Domain: ${PFDomain}"
+    fancyecho "Pixelfed Admin Email: ${PFDomainEmail}"
+    fancyecho "MariaDB Root Password: ${DBRootPass}"
+    fancyecho "MariaDB Pixelfed Password: ${DBPixelfedPass}"
 }
 
 apt_update() {
