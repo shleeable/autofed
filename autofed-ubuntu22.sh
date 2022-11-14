@@ -124,7 +124,7 @@ install_PHP_packages() {
     fancyecho "-----------------------------------------"
     apt  -y install php8.1-fpm php8.1-cli
     systemctl enable --now php8.1-fpm
-    apt  -y install php8.1-bcmath php8.1-curl php8.1-gd php8.1-intl php8.1-mbstring php8.1-xml php8.1-zip php8.1-mysql php-redis
+    apt  -y install php8.1-bcmath php8.1-curl php8.1-gd php8.1-intl php8.1-mbstring php8.1-xml php8.1-zip php8.1-mysql php-redis php8.1-imagek
 }
 
 configure_PHP_inis() {
