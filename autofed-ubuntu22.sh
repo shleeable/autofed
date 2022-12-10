@@ -151,7 +151,7 @@ configure_FPM_inis() {
     cp /etc/php/8.1/fpm/pool.d/www.conf /etc/php/8.1/fpm/pool.d/pixelfed.conf
     sed -i 's/\[www\]/[pixelfed]/' /etc/php/8.1/fpm/pool.d/pixelfed.conf
     sed -i 's/^user = .*/user = pixelfed/' /etc/php/8.1/fpm/pool.d/pixelfed.conf
-    sed -i 's/^group = .*/group = pixelfed/' /etc/php/8.1/fpm/pool.d/pixelfed.conf
+    sed -i 's/^group = .*/group = www-data/' /etc/php/8.1/fpm/pool.d/pixelfed.conf
     sed -i 's/^listen = .*/listen = \/run\/php\/php8.1-fpm-pixelfed.sock/' /etc/php/8.1/fpm/pool.d/pixelfed.conf
     systemctl restart php8.1-fpm
 }
@@ -239,6 +239,7 @@ Type=simple
 ExecStart=/usr/bin/php artisan horizon --environment=production
 ExecStop=/usr/bin/php artisan horizon:terminate --wait
 User=pixelfed
+Group=www-data
 WorkingDirectory=/home/pixelfed/pixelfed/
 Restart=on-failure
 
