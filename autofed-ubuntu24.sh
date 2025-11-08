@@ -367,8 +367,11 @@ git_clone() {
         return 0
     fi
     
-    runuser -u pixelfed -- git clone -b stable https://github.com/pixelfed/pixelfed.git /home/pixelfed/pixelfed
-    runuser -u pixelfed -- bash -c "cd /home/pixelfed/pixelfed && composer install --no-ansi --no-interaction --optimize-autoloader --no-dev"
+    # Clone the dev branch
+    runuser -u pixelfed -- git clone -b dev https://github.com/pixelfed/pixelfed.git /home/pixelfed/pixelfed
+    
+    # Install dependencies
+    runuser -u pixelfed -- bash -c "cd /home/pixelfed/pixelfed && composer install --no-ansi --no-interaction --optimize-autoloader"
     
     fancyecho "✓ Pixelfed cloned and dependencies installed"
 }
@@ -378,16 +381,24 @@ artisan_install() {
     fancyecho "Running Pixelfed installer"
     fancyecho "-----------------------------------------"
     
+    if [ ! -d /home/pixelfed/pixelfed ]; then
+        errdie "Pixelfed directory not found. Git clone may have failed."
+    fi
+    
     # Pre-configure .env to avoid interactive prompts
     if [ ! -f /home/pixelfed/pixelfed/.env ]; then
+        if [ ! -f /home/pixelfed/pixelfed/.env.example ]; then
+            errdie ".env.example not found. Repository may be incomplete."
+        fi
+        
         cp /home/pixelfed/pixelfed/.env.example /home/pixelfed/pixelfed/.env
         chown pixelfed:www-data /home/pixelfed/pixelfed/.env
         
         # Set basic configuration
-        sed -i "s|^APP_URL=.*|APP_URL=https://${PFDomain}|" /home/pixelfed/pixelfed/.env
-        sed -i "s|^APP_DOMAIN=.*|APP_DOMAIN=${PFDomain}|" /home/pixelfed/pixelfed/.env
-        sed -i "s|^ADMIN_DOMAIN=.*|ADMIN_DOMAIN=${PFDomain}|" /home/pixelfed/pixelfed/.env
-        sed -i "s|^SESSION_DOMAIN=.*|SESSION_DOMAIN=${PFDomain}|" /home/pixelfed/pixelfed/.env
+        sed -i "s|^APP_URL=.*|APP_URL=https://staging.pixelfed.shl.ee|" /home/pixelfed/pixelfed/.env
+        sed -i "s|^APP_DOMAIN=.*|APP_DOMAIN=staging.pixelfed.shl.ee|" /home/pixelfed/pixelfed/.env
+        sed -i "s|^ADMIN_DOMAIN=.*|ADMIN_DOMAIN=staging.pixelfed.shl.ee|" /home/pixelfed/pixelfed/.env
+        sed -i "s|^SESSION_DOMAIN=.*|SESSION_DOMAIN=staging.pixelfed.shl.ee|" /home/pixelfed/pixelfed/.env
         sed -i "s|^DB_DATABASE=.*|DB_DATABASE=pixelfed|" /home/pixelfed/pixelfed/.env
         sed -i "s|^DB_USERNAME=.*|DB_USERNAME=pixelfed|" /home/pixelfed/pixelfed/.env
         sed -i "s|^DB_PASSWORD=.*|DB_PASSWORD=${DBPixelfedPass}|" /home/pixelfed/pixelfed/.env
