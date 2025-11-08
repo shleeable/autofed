@@ -14,9 +14,9 @@ main() {
     autofed_variables || return 1
     apt_update || return 1  # Tested
     adduser_pixelfed || return 1  # Tested
-    install_redis || return 1  # Tested
-    install_mariadb || return 1  # Tested
-    mysql_secure || return 1  #  BROKEN
+    #install_redis || return 1  # Tested
+    #install_mariadb || return 1  # Tested
+    #mysql_secure || return 1  #  BROKEN
     prepare_db || return 1  # Tested
     install_packages || return 1  # Tested
     install_PHP_packages || return 1  # Tested
@@ -122,6 +122,7 @@ install_PHP_packages() {
     fancyecho "-----------------------------------------"
     fancyecho "install_PHP_packages"
     fancyecho "-----------------------------------------"
+    add-apt-repository ppa:ondrej/php
     apt  -y install php8.4-fpm php8.4-cli
     systemctl enable --now php8.4-fpm
     apt  -y install php8.4-bcmath php8.4-curl php8.4-gd php8.4-intl php8.4-mbstring php8.4-xml php8.4-zip php8.4-mysql php-redis php8.4-imagek
