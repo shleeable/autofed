@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:11
+    container_name: pixelfed_mariadb
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootroot
+      MYSQL_DATABASE: pixelfed
+      MYSQL_USER: pixelfed
+      MYSQL_PASSWORD: pixelfed
+    volumes:
+      - ./data/mariadb:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - pixelfed
+
+  redis:
+    image: redis:7-alpine
+    container_name: pixelfed_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - ./data/redis:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - pixelfed
+
+networks:
+  pixelfed:
+    driver: bridge
