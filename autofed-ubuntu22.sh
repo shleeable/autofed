@@ -131,28 +131,28 @@ configure_PHP_inis() {
     fancyecho "-----------------------------------------"
     fancyecho "configure_PHP_inis"
     fancyecho "-----------------------------------------"
-    sed -i 's/^post_max_size = .*/post_max_size = 300M/' /etc/php/8.1/cli/php.ini
-    sed -i 's/^file_uploads = .*/file_uploads = On/' /etc/php/8.1/cli/php.ini
-    sed -i 's/^upload_max_filesize = .*/upload_max_filesize = 300M/' /etc/php/8.1/cli/php.ini
-    sed -i 's/^max_file_uploads = .*/max_file_uploads = 20/' /etc/php/8.1/cli/php.ini
-    sed -i 's/^max_execution_time = .*/max_execution_time = 120/' /etc/php/8.1/cli/php.ini
+    sed -i 's/^post_max_size = .*/post_max_size = 300M/' /etc/php/8.4/cli/php.ini
+    sed -i 's/^file_uploads = .*/file_uploads = On/' /etc/php/8.4/cli/php.ini
+    sed -i 's/^upload_max_filesize = .*/upload_max_filesize = 300M/' /etc/php/8.4/cli/php.ini
+    sed -i 's/^max_file_uploads = .*/max_file_uploads = 20/' /etc/php/8.4/cli/php.ini
+    sed -i 's/^max_execution_time = .*/max_execution_time = 120/' /etc/php/8.4/cli/php.ini
 
-    sed -i 's/^post_max_size = .*/post_max_size = 300M/' /etc/php/8.1/fpm/php.ini
-    sed -i 's/^file_uploads = .*/file_uploads = On/' /etc/php/8.1/fpm/php.ini
-    sed -i 's/^upload_max_filesize = .*/upload_max_filesize = 300M/' /etc/php/8.1/fpm/php.ini
-    sed -i 's/^max_file_uploads = .*/max_file_uploads = 20/' /etc/php/8.1/fpm/php.ini
-    sed -i 's/^max_execution_time = .*/max_execution_time = 120/' /etc/php/8.1/fpm/php.ini
+    sed -i 's/^post_max_size = .*/post_max_size = 300M/' /etc/php/8.4/fpm/php.ini
+    sed -i 's/^file_uploads = .*/file_uploads = On/' /etc/php/8.4/fpm/php.ini
+    sed -i 's/^upload_max_filesize = .*/upload_max_filesize = 300M/' /etc/php/8.4/fpm/php.ini
+    sed -i 's/^max_file_uploads = .*/max_file_uploads = 20/' /etc/php/8.4/fpm/php.ini
+    sed -i 's/^max_execution_time = .*/max_execution_time = 120/' /etc/php/8.4/fpm/php.ini
 }
 
 configure_FPM_inis() {
     fancyecho "-----------------------------------------"
     fancyecho "configure_FPM_inis"
     fancyecho "-----------------------------------------"
-    cp /etc/php/8.1/fpm/pool.d/www.conf /etc/php/8.1/fpm/pool.d/pixelfed.conf
-    sed -i 's/\[www\]/[pixelfed]/' /etc/php/8.1/fpm/pool.d/pixelfed.conf
-    sed -i 's/^user = .*/user = pixelfed/' /etc/php/8.1/fpm/pool.d/pixelfed.conf
-    sed -i 's/^group = .*/group = www-data/' /etc/php/8.1/fpm/pool.d/pixelfed.conf
-    sed -i 's/^listen = .*/listen = \/run\/php\/php8.4-fpm-pixelfed.sock/' /etc/php/8.1/fpm/pool.d/pixelfed.conf
+    cp /etc/php/8.4/fpm/pool.d/www.conf /etc/php/8.4/fpm/pool.d/pixelfed.conf
+    sed -i 's/\[www\]/[pixelfed]/' /etc/php/8.4/fpm/pool.d/pixelfed.conf
+    sed -i 's/^user = .*/user = pixelfed/' /etc/php/8.4/fpm/pool.d/pixelfed.conf
+    sed -i 's/^group = .*/group = www-data/' /etc/php/8.4/fpm/pool.d/pixelfed.conf
+    sed -i 's/^listen = .*/listen = \/run\/php\/php8.4-fpm-pixelfed.sock/' /etc/php/8.4/fpm/pool.d/pixelfed.conf
     systemctl restart php8.4-fpm
 }
 
