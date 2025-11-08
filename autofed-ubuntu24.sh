@@ -27,8 +27,6 @@ main() {
     artisan_install || return 1  # ??
     artisan_horizon || return 1  # Tested
     set_pathpermissions || return 1  # Tested
-    #install_nginx || return 1  # ??
-    #nginx_certbot || return 1  # ?
     systemd_pixelfedhorizon || return 1  # ?
     cron_artisan_schedule || return 1  # Tested
 }
@@ -76,12 +74,11 @@ adduser_pixelfed() {
     adduser --disabled-password --gecos "" pixelfed
 }
 
-
 prepare_db() {
     fancyecho "-----------------------------------------"
     fancyecho "prepare_db"
     fancyecho "-----------------------------------------"
-    mysql -u root <<EOS
+    mysql -u root --password=${DBRootPass} <<EOS
     create database pixelfed;
     grant all privileges on pixelfed.* to 'pixelfed'@'localhost' identified by "${DBPixelfedPass}";
     flush privileges;
@@ -92,7 +89,7 @@ install_packages() {
     fancyecho "-----------------------------------------"
     fancyecho "install_packages"
     fancyecho "-----------------------------------------"
-    apt -y install ffmpeg unzip zip jpegoptim optipng pngquant gifsicle
+    apt -y install ffmpeg unzip zip jpegoptim optipng pngquant gifsicle libvips42
 }
 
 install_PHP_packages() {
