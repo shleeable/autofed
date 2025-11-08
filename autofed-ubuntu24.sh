@@ -166,6 +166,7 @@ DB_ROOT_PASSWORD=$DBRootPass
 DB_PIXELFED_PASSWORD=$DBPixelfedPass
 EOF
     chmod 600 "$CRED_FILE"
+    cat $CRED_FILE
     fancyecho "✓ Credentials saved to $CRED_FILE"
 }
 
