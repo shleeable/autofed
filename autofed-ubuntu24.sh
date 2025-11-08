@@ -385,7 +385,20 @@ artisan_install() {
         errdie "Pixelfed directory not found. Git clone may have failed."
     fi
     
-    runuser -u pixelfed -- bash -c "cd /home/pixelfed/pixelfed && php artisan install"
+    fancyecho "Running Pixelfed installer with pre-filled credentials..."
+    
+    runuser -u pixelfed -- bash -c "cd /home/pixelfed/pixelfed && php artisan install \
+        --domain='${PFDomain}' \
+        --name='Pixelfed' \
+        --db-driver='mysql' \
+        --db-host='127.0.0.1' \
+        --db-port='3306' \
+        --db-database='pixelfed' \
+        --db-username='pixelfed' \
+        --db-password='${DBPixelfedPass}' \
+        --redis-host='localhost' \
+        --redis-port='6379' \
+        --redis-password=''"
     
     fancyecho "✓ Pixelfed installer completed"
 }
