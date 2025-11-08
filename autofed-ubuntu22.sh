@@ -122,9 +122,9 @@ install_PHP_packages() {
     fancyecho "-----------------------------------------"
     fancyecho "install_PHP_packages"
     fancyecho "-----------------------------------------"
-    apt  -y install php8.1-fpm php8.1-cli
-    systemctl enable --now php8.1-fpm
-    apt  -y install php8.1-bcmath php8.1-curl php8.1-gd php8.1-intl php8.1-mbstring php8.1-xml php8.1-zip php8.1-mysql php-redis php8.1-imagek
+    apt  -y install php8.4-fpm php8.4-cli
+    systemctl enable --now php8.4-fpm
+    apt  -y install php8.4-bcmath php8.4-curl php8.4-gd php8.4-intl php8.4-mbstring php8.4-xml php8.4-zip php8.4-mysql php-redis php8.4-imagek
 }
 
 configure_PHP_inis() {
@@ -152,8 +152,8 @@ configure_FPM_inis() {
     sed -i 's/\[www\]/[pixelfed]/' /etc/php/8.1/fpm/pool.d/pixelfed.conf
     sed -i 's/^user = .*/user = pixelfed/' /etc/php/8.1/fpm/pool.d/pixelfed.conf
     sed -i 's/^group = .*/group = www-data/' /etc/php/8.1/fpm/pool.d/pixelfed.conf
-    sed -i 's/^listen = .*/listen = \/run\/php\/php8.1-fpm-pixelfed.sock/' /etc/php/8.1/fpm/pool.d/pixelfed.conf
-    systemctl restart php8.1-fpm
+    sed -i 's/^listen = .*/listen = \/run\/php\/php8.4-fpm-pixelfed.sock/' /etc/php/8.1/fpm/pool.d/pixelfed.conf
+    systemctl restart php8.4-fpm
 }
 
 install_composer() {
@@ -214,7 +214,7 @@ nginx_certbot() {
     sed -i 's/root .*/root \/home\/pixelfed\/pixelfed\/public\/\;/' /etc/nginx/sites-available/pixelfed.conf
     sed -i "s/ssl_certificate .*/ssl_certificate \/etc\/letsencrypt\/live\/${PFDomain}\/fullchain.pem\;/" /etc/nginx/sites-available/pixelfed.conf
     sed -i "s/ssl_certificate_key .*/ssl_certificate_key \/etc\/letsencrypt\/live\/${PFDomain}\/privkey.pem;/" /etc/nginx/sites-available/pixelfed.conf
-    sed -i 's/fastcgi_pass .*/fastcgi_pass unix:\/run\/php\/php8.1-fpm-pixelfed.sock;/' /etc/nginx/sites-available/pixelfed.conf
+    sed -i 's/fastcgi_pass .*/fastcgi_pass unix:\/run\/php\/php8.4-fpm-pixelfed.sock;/' /etc/nginx/sites-available/pixelfed.conf
 
     ln -s /etc/nginx/sites-available/pixelfed.conf /etc/nginx/sites-enabled/
     systemctl reload nginx && fancyecho "nginx reloaded"
@@ -230,7 +230,7 @@ tee /etc/systemd/system/pixelfedhorizon.service <<EOF
 Description=Pixelfed task queueing via Laravel Horizon
 After=network.target
 Requires=mariadb
-Requires=php8.1-fpm
+Requires=php8.4-fpm
 Requires=redis
 Requires=nginx
 
