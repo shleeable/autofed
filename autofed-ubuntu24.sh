@@ -166,7 +166,6 @@ DB_ROOT_PASSWORD=$DBRootPass
 DB_PIXELFED_PASSWORD=$DBPixelfedPass
 EOF
     chmod 600 "$CRED_FILE"
-    cat $CRED_FILE
     fancyecho "✓ Credentials saved to $CRED_FILE"
 }
 
@@ -369,7 +368,7 @@ git_clone() {
     fi
     
     # Clone the dev branch
-    runuser -u pixelfed -- git clone -b dev https://github.com/pixelfed/pixelfed.git /home/pixelfed/pixelfed
+    runuser -u pixelfed -- git clone -b dev https://github.com/shleeable/pixelfed-staging.git /home/pixelfed/pixelfed
     
     # Install dependencies
     runuser -u pixelfed -- bash -c "cd /home/pixelfed/pixelfed && composer install --no-ansi --no-interaction --optimize-autoloader"
@@ -386,28 +385,9 @@ artisan_install() {
         errdie "Pixelfed directory not found. Git clone may have failed."
     fi
     
-    # Pre-configure .env to avoid interactive prompts
-    if [ ! -f /home/pixelfed/pixelfed/.env ]; then
-        if [ ! -f /home/pixelfed/pixelfed/.env.example ]; then
-            errdie ".env.example not found. Repository may be incomplete."
-        fi
-        
-        cp /home/pixelfed/pixelfed/.env.example /home/pixelfed/pixelfed/.env
-        chown pixelfed:www-data /home/pixelfed/pixelfed/.env
-        
-        # Set basic configuration
-        sed -i "s|^APP_URL=.*|APP_URL=https://staging.pixelfed.shl.ee|" /home/pixelfed/pixelfed/.env
-        sed -i "s|^APP_DOMAIN=.*|APP_DOMAIN=staging.pixelfed.shl.ee|" /home/pixelfed/pixelfed/.env
-        sed -i "s|^ADMIN_DOMAIN=.*|ADMIN_DOMAIN=staging.pixelfed.shl.ee|" /home/pixelfed/pixelfed/.env
-        sed -i "s|^SESSION_DOMAIN=.*|SESSION_DOMAIN=staging.pixelfed.shl.ee|" /home/pixelfed/pixelfed/.env
-        sed -i "s|^DB_DATABASE=.*|DB_DATABASE=pixelfed|" /home/pixelfed/pixelfed/.env
-        sed -i "s|^DB_USERNAME=.*|DB_USERNAME=pixelfed|" /home/pixelfed/pixelfed/.env
-        sed -i "s|^DB_PASSWORD=.*|DB_PASSWORD=${DBPixelfedPass}|" /home/pixelfed/pixelfed/.env
-        sed -i "s|^MAIL_FROM_ADDRESS=.*|MAIL_FROM_ADDRESS=${PFDomainEmail}|" /home/pixelfed/pixelfed/.env
-    fi
+    runuser -u pixelfed -- bash -c "cd /home/pixelfed/pixelfed && php artisan install"
     
-    fancyecho "⚠ You may need to run 'php artisan install' manually as pixelfed user"
-    fancyecho "  cd /home/pixelfed/pixelfed && php artisan install"
+    fancyecho "✓ Pixelfed installer completed"
 }
 
 artisan_horizon() {
