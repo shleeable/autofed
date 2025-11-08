@@ -76,29 +76,6 @@ adduser_pixelfed() {
     adduser --disabled-password --gecos "" pixelfed
 }
 
-install_redis() {
-    fancyecho "-----------------------------------------"
-    fancyecho "install_redis"
-    fancyecho "-----------------------------------------"
-    apt -y install redis-server
-    systemctl enable --now redis-server
-}
-
-install_mariadb() {
-    fancyecho "-----------------------------------------"
-    fancyecho "install_mariadb"
-    fancyecho "-----------------------------------------"
-    apt -y install mariadb-server
-    systemctl enable --now mariadb
-}
-
-# BROKEN
-mysql_secure() {
-    fancyecho "-----------------------------------------"
-    fancyecho "mysql_secure_installation"
-    fancyecho "-----------------------------------------"
-    /usr/bin/mysql_secure_installation
-}
 
 prepare_db() {
     fancyecho "-----------------------------------------"
@@ -193,33 +170,6 @@ set_pathpermissions() {
     fancyecho "-----------------------------------------"
     fancyecho "set_pathpermissions"
     chown -R pixelfed:www-data /home/pixelfed
-}
-
-install_nginx() {
-    fancyecho "-----------------------------------------"
-    fancyecho "install_nginx"
-    fancyecho "-----------------------------------------"
-    apt -y install nginx certbot python3-certbot-nginx
-    systemctl enable --now nginx
-}
-
-# BROKEN
-nginx_certbot() {
-    fancyecho "-----------------------------------------"
-    fancyecho "nginx_certbot"
-    fancyecho "-----------------------------------------"
-    rm /etc/nginx/sites-enabled/default
-    certbot certonly --standalone --noninteractive --agree-tos -m ${PFDomainEmail} -d ${PFDomain}
-    cp /home/pixelfed/pixelfed/contrib/nginx.conf /etc/nginx/sites-available/pixelfed.conf
-
-    sed -i "s/server_name .*/server_name ${PFDomain};/" /etc/nginx/sites-available/pixelfed.conf  # Changes both references
-    sed -i 's/root .*/root \/home\/pixelfed\/pixelfed\/public\/\;/' /etc/nginx/sites-available/pixelfed.conf
-    sed -i "s/ssl_certificate .*/ssl_certificate \/etc\/letsencrypt\/live\/${PFDomain}\/fullchain.pem\;/" /etc/nginx/sites-available/pixelfed.conf
-    sed -i "s/ssl_certificate_key .*/ssl_certificate_key \/etc\/letsencrypt\/live\/${PFDomain}\/privkey.pem;/" /etc/nginx/sites-available/pixelfed.conf
-    sed -i 's/fastcgi_pass .*/fastcgi_pass unix:\/run\/php\/php8.4-fpm-pixelfed.sock;/' /etc/nginx/sites-available/pixelfed.conf
-
-    ln -s /etc/nginx/sites-available/pixelfed.conf /etc/nginx/sites-enabled/
-    systemctl reload nginx && fancyecho "nginx reloaded"
 }
 
 systemd_pixelfedhorizon() {
