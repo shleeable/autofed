@@ -27,8 +27,8 @@ main() {
     artisan_install || return 1  # ??
     artisan_horizon || return 1  # Tested
     set_pathpermissions || return 1  # Tested
-    install_nginx || return 1  # ??
-    nginx_certbot || return 1  # ?
+    #install_nginx || return 1  # ??
+    #nginx_certbot || return 1  # ?
     systemd_pixelfedhorizon || return 1  # ?
     cron_artisan_schedule || return 1  # Tested
 }
@@ -125,7 +125,8 @@ install_PHP_packages() {
     add-apt-repository ppa:ondrej/php
     apt  -y install php8.4-fpm php8.4-cli
     systemctl enable --now php8.4-fpm
-    apt  -y install php8.4-bcmath php8.4-curl php8.4-gd php8.4-intl php8.4-mbstring php8.4-xml php8.4-zip php8.4-mysql php-redis php8.4-imagek
+    apt  -y install php8.4-bcmath php8.4-curl php8.4-gd php8.4-intl php8.4-mbstring php8.4-xml php8.4-zip php8.4-mysql php-redis php8.4-vips
+    # php8.4-imagek does not exist?
 }
 
 configure_PHP_inis() {
